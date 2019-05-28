@@ -1,4 +1,4 @@
-#include "quantum.h"
+#include "Quantum.h"
 
 //This performs a wigner transformation from a wavefunction into phase space distribution in atomic unit, dp needs to be specified
 void WignerTransform_au(gsl_matrix_complex * dest, gsl_vector_complex * source, int grades, double dx, double dp)
