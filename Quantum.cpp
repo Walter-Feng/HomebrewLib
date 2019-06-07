@@ -21,7 +21,7 @@ void WignerTransform_au(gsl_matrix_complex * dest, gsl_vector_complex * source, 
             {
                 if(i-k>=0 && i+k<2*grades+1)
                 {
-                    GSL_SET_COMPLEX(&power,0,2.0*(j-grades)*dp*dx*k);
+                    GSL_SET_COMPLEX(&power,0,-2.0*(j-grades)*dp*dx*k);
                     //Here is the integrated part, namely dy \psi^\dagger(x-y) \psi(x+y) exp(2py/h). The operation steps are:
                     //dx *( ( (\psi(x-y))^dagger * \psi(x+y) ) * exp{2py} )
                     temp = gsl_complex_mul_real(gsl_complex_mul(gsl_complex_mul(gsl_complex_conjugate(gsl_vector_complex_get(source,i-k)),gsl_vector_complex_get(source,i+k)),gsl_complex_exp(power)),dx);
@@ -46,7 +46,7 @@ void WignerTransform_SI(gsl_matrix_complex * dest, gsl_vector_complex * source, 
     int j;
     int k;
     
-    double h = 6.626070040818181818e-34;
+    double h = 6.626070040818181818e-34/M_PI/2.0;
     //Start converting. In this code, i stands for the x grid points, j for the p grid points, and k for the sum step cursor representing integration \int dy \psi^\dagger(x-y) \psi(x+y) exp(2py/h).
     for(i=0;i<2*grades+1;i++)
     {   
@@ -57,7 +57,7 @@ void WignerTransform_SI(gsl_matrix_complex * dest, gsl_vector_complex * source, 
             {
                 if(i-k>=0 && i+k<2*grades+1)
                 {
-                    GSL_SET_COMPLEX(&power,0,2.0*(j-grades)*dp*dx*k/h);
+                    GSL_SET_COMPLEX(&power,0,-2.0*(j-grades)*dp*dx*k/h);
                     //Here is the integrated part, namely dy \psi^\dagger(x-y) \psi(x+y) exp(2py/h). The operation steps are:
                     //dx *( ( (\psi(x-y))^dagger * \psi(x+y) ) * exp{2py/h} )
                     temp = gsl_complex_mul_real(gsl_complex_mul(gsl_complex_mul(gsl_complex_conjugate(gsl_vector_complex_get(source,i-k)),gsl_vector_complex_get(source,i+k)),gsl_complex_exp(power)),dx);
@@ -69,3 +69,5 @@ void WignerTransform_SI(gsl_matrix_complex * dest, gsl_vector_complex * source, 
         }
     }
 }
+
+void WeylTransform()
